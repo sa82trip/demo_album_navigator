@@ -28,12 +28,20 @@ function App() {
   return (
     <>
       <h1 className="text-xl font-bold">Hello Demo Album</h1>
-      <ImageTable images={currentImages()} />
-      <Pagination
-        imagesPerPage={imagesPerPage}
-        paginate={setCurrentPage}
-        totalImages={images.length}
-      />
+      <div className="flex items-center justify-center">
+        <div className="flex flex-col">
+          <ImageTable images={currentImages()} />
+          <div className="flex flex-row justify-center">
+            <div></div>
+            <Pagination
+              imagesPerPage={imagesPerPage}
+              paginate={setCurrentPage}
+              totalImages={images.length}
+            />
+            <div></div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
