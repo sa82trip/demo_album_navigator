@@ -86,10 +86,11 @@ function App() {
     }
   };
   const logoutHandler = () => {
-    const test = window.confirm("Do you really want to logout?");
-    if (test) {
+    const isConfirmed = window.confirm("Do you really want to logout?");
+    if (isConfirmed) {
       localStorage.clear();
       history.push("/");
+      history.go("/");
       setIsLoggedIn(false);
     }
   };
