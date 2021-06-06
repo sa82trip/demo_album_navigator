@@ -15,12 +15,7 @@ const ImageTable = ({ images }) => {
             </div>
             <div key={one.id} className="ml-1 my-1 max-w-max">
               <label className="text-xs font-semibold">{one.title}</label>
-              <img
-                className="w-auto rounded-lg"
-                src={`https://via.placeholder.com/1024x250/${
-                  COLORS[Math.round(Math.random() * 10 - 5)]
-                }?text=${one.title}`}
-              />
+              <img className="w-auto rounded-lg" src={one.imageUrl} />
             </div>
           </div>
         ))}
