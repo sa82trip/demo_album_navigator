@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import ImageTable from "./components/ImageTable";
 import ImageUploader from "./components/ImageUploader";
+import { NavBar } from "./components/NavBar";
 import Pagination from "./components/Pagination";
 import { COLORS } from "./constant/colors";
 import { Login } from "./pages/login";
@@ -24,7 +25,7 @@ function App() {
   const [previewURL, setPreviewURL] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const history = useHistory();
-  const location = useLocation();
+  const [location, setLocation] = useState("");
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/albums").then((response) => {
@@ -98,27 +99,7 @@ function App() {
   return (
     <Router>
       <>
-        <nav className="m-1 p-1 bg-indigo-300 flex justify-between">
-          <div>
-            <Link to="/">
-              <h1 className="text-xl font-bold">Hello Demo Album</h1>
-            </Link>
-          </div>
-          <div></div>
-          <div>
-            <button
-              className="rounded-none bg-gray-500 px-3 text-white font-semibold"
-              onClick={() => logoutHandler()}
-            >
-              logout
-            </button>
-            <Link to="/upload">
-              <button className="rounded-none bg-gray-500 px-3 text-white font-semibold">
-                upload
-              </button>
-            </Link>
-          </div>
-        </nav>
+        <NavBar logoutHandler={logoutHandler} />
         <Switch>
           <Route exact path="/">
             <div className="flex items-center justify-center">
