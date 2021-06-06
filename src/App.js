@@ -1,4 +1,13 @@
 import { useEffect, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Link,
+  Redirect,
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import ImageTable from "./components/ImageTable";
 import ImageUploader from "./components/ImageUploader";
 import Pagination from "./components/Pagination";
@@ -6,16 +15,16 @@ import { COLORS } from "./constant/colors";
 import { Login } from "./pages/login";
 import "./styles/styles.css";
 
-// const url = `https://via.placeholder.com/1024x250/${
-//   COLORS[Math.round(Math.random() * 10 - 5)]
-// }?text=${one.title}`;
 function App() {
   const [images, setImages] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [imagesPerPage, setImagesPerPage] = useState(5);
   const [file, setFile] = useState("");
+  const [onePost, setOnePost] = useState({});
   const [previewURL, setPreviewURL] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/albums").then((response) => {
@@ -31,9 +40,7 @@ function App() {
 
   // 각페이지에 표시 될 그림들을 리턴하는 함수
   const currentImages = () => {
-    console.log("currentImages");
     return images.slice(indexOfFirst, indexOfLast).map((one) => {
-      console.log(one);
       const url = `https://via.placeholder.com/1024x250/${
         COLORS[Math.round(Math.random() * 10 - 5)]
       }?text=${one.title}`;
@@ -41,32 +48,47 @@ function App() {
         id: one.id,
         userId: one.userId,
         title: one.title,
-        imageUrl: one.id === 101 ? previewURL : url,
+        imageUrl: one.id === "R" ? one.imageUrl : url,
       };
     });
   };
 
-  const handleFileOnChange = async (event) => {
+  const handleFileOnChange = (event) => {
     event.preventDefault();
     let reader = new FileReader();
-    let file = event.target.files[0];
-    reader.onloadend = () => {
-      setFile(file);
-      setPreviewURL(reader.result);
-    };
-    reader.readAsDataURL(file);
-    const newImages = Array.from(images);
-    newImages.unshift({
-      id: 101,
+    const files = Array.from(event.target.files);
+    let file = files.pop();
+    console.log(file);
+    const newImage = {
+      id: "R",
       title: "user uploaded photo",
       userId: 101,
-    });
-    await setImages(newImages);
+      imageUrl: "",
+    };
+    reader.onload = () => {
+      setFile(file);
+      setPreviewURL(reader.result);
+      newImage.imageUrl = reader.result;
+    };
+    reader.readAsDataURL(file);
+    setOnePost(newImage);
+  };
+  const postingHandler = () => {
+    console.log("postingHandler");
+    if (onePost) {
+      const newImages = Array.from(images);
+      newImages.unshift(onePost);
+      setImages(newImages);
+      setPreviewURL("");
+    } else {
+      console.log("no image");
+    }
   };
   const logoutHandler = () => {
     const test = window.confirm("Do you really want to logout?");
     if (test) {
       localStorage.clear();
+      history.push("/");
       setIsLoggedIn(false);
     }
   };
@@ -74,42 +96,58 @@ function App() {
     return <Login setIsLoggedIn={setIsLoggedIn} />;
   }
   return (
-    <>
-      <nav className="m-1 p-1 bg-indigo-300 flex justify-between">
-        <div>
-          <h1 className="text-xl font-bold">Hello Demo Album</h1>
-        </div>
-        <div></div>
-        <div>
-          <button
-            className="rounded-none bg-gray-500 px-3 text-white font-semibold"
-            onClick={() => logoutHandler()}
-          >
-            logout
-          </button>
-        </div>
-      </nav>
-      <div className="flex items-center justify-center">
-        <div className="">
-          <ImageTable images={currentImages()} />
-          <div className="flex justify-center items-center mt-5">
-            <div></div>
-            <Pagination
-              currentPage={currentPage}
-              imagesPerPage={imagesPerPage}
-              paginate={setCurrentPage}
-              currentImages={currentImages}
-              totalImages={images.length}
-            />
-            <div></div>
+    <Router>
+      <>
+        <nav className="m-1 p-1 bg-indigo-300 flex justify-between">
+          <div>
+            <Link to="/">
+              <h1 className="text-xl font-bold">Hello Demo Album</h1>
+            </Link>
           </div>
-        </div>
-      </div>
-      <ImageUploader
-        previewURL={previewURL}
-        handleFileOnChange={handleFileOnChange}
-      />
-    </>
+          <div></div>
+          <div>
+            <button
+              className="rounded-none bg-gray-500 px-3 text-white font-semibold"
+              onClick={() => logoutHandler()}
+            >
+              logout
+            </button>
+            <Link to="/upload">
+              <button className="rounded-none bg-gray-500 px-3 text-white font-semibold">
+                upload
+              </button>
+            </Link>
+          </div>
+        </nav>
+        <Switch>
+          <Route exact path="/">
+            <div className="flex items-center justify-center">
+              <div className="">
+                <ImageTable images={currentImages()} />
+                <div className="flex justify-center items-center mt-5">
+                  <div></div>
+                  <Pagination
+                    currentPage={currentPage}
+                    imagesPerPage={imagesPerPage}
+                    paginate={setCurrentPage}
+                    currentImages={currentImages}
+                    totalImages={images.length}
+                  />
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          </Route>
+          <Route exact path="/upload">
+            <ImageUploader
+              postingHandler={postingHandler}
+              previewURL={previewURL}
+              handleFileOnChange={handleFileOnChange}
+            />
+          </Route>
+        </Switch>
+      </>
+    </Router>
   );
 }
 
