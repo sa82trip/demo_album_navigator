@@ -7,8 +7,8 @@ const Pagination = ({ imagesPerPage, totalImages, paginate }) => {
     pageNumbers.push(i);
   }
   return (
-    <div>
-      <ul className="flex">
+    <div className="pb-10 ml-5">
+      <ul className="flex flex-wrap">
         {pageNumbers.map((number) => (
           <li className="mx-1">
             <span
