@@ -63,12 +63,32 @@ function App() {
     });
     await setImages(newImages);
   };
+  const logoutHandler = () => {
+    const test = window.confirm("Do you really want to logout?");
+    if (test) {
+      localStorage.clear();
+      setIsLoggedIn(false);
+    }
+  };
   if (localStorage.getItem("userId") !== "mock@test.com") {
     return <Login setIsLoggedIn={setIsLoggedIn} />;
   }
   return (
     <>
-      <h1 className="text-xl font-bold mb-3">Hello Demo Album</h1>
+      <nav className="m-1 p-1 bg-indigo-300 flex justify-between">
+        <div>
+          <h1 className="text-xl font-bold">Hello Demo Album</h1>
+        </div>
+        <div></div>
+        <div>
+          <button
+            className="rounded-none bg-gray-500 px-3 text-white font-semibold"
+            onClick={() => logoutHandler()}
+          >
+            logout
+          </button>
+        </div>
+      </nav>
       <div className="flex items-center justify-center">
         <div className="">
           <ImageTable images={currentImages()} />
