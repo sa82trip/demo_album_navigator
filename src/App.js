@@ -3,6 +3,7 @@ import ImageTable from "./components/ImageTable";
 import ImageUploader from "./components/ImageUploader";
 import Pagination from "./components/Pagination";
 import { COLORS } from "./constant/colors";
+import { Login } from "./pages/login";
 import "./styles/styles.css";
 
 // const url = `https://via.placeholder.com/1024x250/${
@@ -14,6 +15,7 @@ function App() {
   const [imagesPerPage, setImagesPerPage] = useState(5);
   const [file, setFile] = useState("");
   const [previewURL, setPreviewURL] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/albums").then((response) => {
@@ -61,6 +63,9 @@ function App() {
     });
     await setImages(newImages);
   };
+  if (localStorage.getItem("userId") !== "mock@test.com") {
+    return <Login setIsLoggedIn={setIsLoggedIn} />;
+  }
   return (
     <>
       <h1 className="text-xl font-bold mb-3">Hello Demo Album</h1>
