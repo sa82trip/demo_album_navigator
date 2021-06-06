@@ -34,7 +34,7 @@ export const Login = ({ setIsLoggedIn }) => {
           <input
             placeholder="Email"
             type="email"
-            className="formInput text-lg"
+            className="formInput text-lg mb-1 text-black"
             {...register("email", {
               required: true,
               pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -49,7 +49,7 @@ export const Login = ({ setIsLoggedIn }) => {
           )}
           <input
             placeholder="Password"
-            className="formInput text-lg"
+            className="formInput text-lg text-black"
             type="password"
             {...register("password", { required: true, minLength: 6 })}
           />
