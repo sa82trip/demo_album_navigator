@@ -1,7 +1,6 @@
 import React from "react";
 
 const Pagination = ({ imagesPerPage, totalImages, paginate }) => {
-  console.log("pagination");
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalImages / imagesPerPage); i++) {
     pageNumbers.push(i);

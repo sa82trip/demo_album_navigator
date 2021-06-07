@@ -10,7 +10,6 @@ const mockUser = {
 export const Login = ({ setIsLoggedIn }) => {
   const history = useHistory();
   const loginHandler = ({ email, password }) => {
-    console.log(email, password);
     if (email === mockUser.userId && password === mockUser.password) {
       localStorage.setItem("userId", mockUser.userId);
       setIsLoggedIn(true);

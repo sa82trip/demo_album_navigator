@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
-  Link,
-  Redirect,
   Route,
   Switch,
   useHistory,
-  useLocation,
 } from "react-router-dom";
 import ImageTable from "./components/ImageTable";
 import ImageUploader from "./components/ImageUploader";
 import { NavBar } from "./components/NavBar";
 import Pagination from "./components/Pagination";
+import PostingEditor from "./components/PostingEditor";
 import { COLORS } from "./constant/colors";
 import { Login } from "./pages/login";
 import "./styles/styles.css";
@@ -25,7 +23,6 @@ function App() {
   const [previewURL, setPreviewURL] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const history = useHistory();
-  const [location, setLocation] = useState("");
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/albums").then((response) => {
@@ -49,33 +46,49 @@ function App() {
         id: one.id,
         userId: one.userId,
         title: one.title,
-        imageUrl: one.id === "R" ? one.imageUrl : url,
+        imageUrl: one.imageUrl && one.imageUrl.length > 0 ? one.imageUrl : url,
       };
     });
   };
 
   const handleFileOnChange = (event) => {
+    let editingTarget;
+
     event.preventDefault();
     let reader = new FileReader();
     const files = Array.from(event.target.files);
     let file = files.pop();
-    console.log(file);
+    //여기서 분기 처리 해서 edit랑 post랑 구별
     const newImage = {
-      id: "R",
+      id: `R-${new Date().valueOf()}`,
       title: "user uploaded photo",
       userId: 101,
       imageUrl: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
+    if (event.target.name === "editing") {
+      editingTarget = images.find((one) => one.id == event.target.id);
+    }
     reader.onload = () => {
       setFile(file);
       setPreviewURL(reader.result);
-      newImage.imageUrl = reader.result;
+      if (event.target.name === "editing") {
+        editingTarget.imageUrl = reader.result;
+        editingTarget.updatedAt = new Date();
+      } else {
+        newImage.imageUrl = reader.result;
+      }
     };
     reader.readAsDataURL(file);
-    setOnePost(newImage);
+    if (event.target.name === "editing") {
+      setOnePost(editingTarget);
+    } else {
+      setOnePost(newImage);
+    }
   };
+
   const postingHandler = () => {
-    console.log("postingHandler");
     if (onePost) {
       const newImages = Array.from(images);
       newImages.unshift(onePost);
@@ -83,6 +96,28 @@ function App() {
       setPreviewURL("");
     } else {
       console.log("no image");
+    }
+  };
+  const editHandle = () => {
+    let newList = images.filter((one) => !one.createdAt);
+    let onlyWithDate = images.filter((one) => one.createdAt);
+    //data를 처음에 date가 없는 걸 받았기 때문에, 새로 업로드 하는 포스팅이랑 따로 작업
+    if (onePost.createdAt) {
+      if (onlyWithDate) {
+        if (onlyWithDate.length == 1) {
+          onlyWithDate[0] = onePost;
+          console.log(onlyWithDate);
+          setImages([...onlyWithDate, ...newList]);
+        } else if (onlyWithDate.length > 1) {
+          onlyWithDate.filter((one) => one.id !== onePost.id).push(onePost);
+          onlyWithDate.sort((a, b) => a.createdAt - b.createdAt);
+          setImages([...onlyWithDate, ...newList]);
+        }
+      }
+    } else {
+      newList.filter((one) => one.id !== onePost.id).push(onePost);
+      newList.sort((a, b) => a.id - b.id);
+      setImages(onlyWithDate ? [...onlyWithDate, ...newList] : newList);
     }
   };
   const logoutHandler = () => {
@@ -125,6 +160,14 @@ function App() {
               postingHandler={postingHandler}
               previewURL={previewURL}
               handleFileOnChange={handleFileOnChange}
+            />
+          </Route>
+          <Route exact path="/edit/:id">
+            <PostingEditor
+              previewURL={previewURL}
+              images={images}
+              handleFileOnChange={handleFileOnChange}
+              editHandle={editHandle}
             />
           </Route>
         </Switch>

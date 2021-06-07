@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 
 export const NavBar = ({ logoutHandler }) => {
   const location = useLocation();
-  console.log("navbar", typeof location.pathname);
   let regex = new RegExp("^/$");
 
   return (

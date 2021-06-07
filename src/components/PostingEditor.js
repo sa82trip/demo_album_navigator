@@ -1,14 +1,29 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 
-const ImageUploader = ({ postingHandler, previewURL, handleFileOnChange }) => {
+export default function PostingEditor({
+  previewURL,
+  handleFileOnChange,
+  images,
+  editHandle,
+}) {
   const history = useHistory();
+  const params = useParams();
+  const [target, setTarget] = useState({});
+  useEffect(() => {
+    editPost();
+  }, []);
+  const editPost = () => {
+    const post = images.filter((one) => one.id == params.id)[0];
+    setTarget(post);
+  };
   return (
     <>
       <div id="image_upload" className="mx-1">
         <span>
           <input
-            name="posting"
+            name="editing"
+            id={target.id}
             type="file"
             onChange={(e) => handleFileOnChange(e)}
           ></input>
@@ -19,7 +34,7 @@ const ImageUploader = ({ postingHandler, previewURL, handleFileOnChange }) => {
         <div></div>
         <button
           onClick={() => {
-            postingHandler();
+            editHandle();
             history.push("/");
           }}
           className="mx-3 p-2 bg-indigo-500 text-white font-semibold rounded-md"
@@ -29,5 +44,4 @@ const ImageUploader = ({ postingHandler, previewURL, handleFileOnChange }) => {
       </div>
     </>
   );
-};
-export default ImageUploader;
+}
