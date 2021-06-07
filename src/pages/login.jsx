@@ -1,24 +1,26 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
 
 const mockUser = {
   userId: "mock@test.com",
   password: "123456",
 };
+const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-export const Login = ({ setIsLoggedIn }) => {
-  const history = useHistory();
+export const Login = ({ setIsLoggedIn, setLoggedInUser }) => {
   const loginHandler = ({ email, password }) => {
     if (email === mockUser.userId && password === mockUser.password) {
       localStorage.setItem("userId", mockUser.userId);
+      setLoggedInUser({
+        userId: email,
+        password: "mockxxxxxxxxxxxx" + password,
+      });
       setIsLoggedIn(true);
     }
   };
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isValid },
   } = useForm({ mode: "onChange" });
 
@@ -36,7 +38,7 @@ export const Login = ({ setIsLoggedIn }) => {
             className="formInput text-lg mb-1 text-black"
             {...register("email", {
               required: true,
-              pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              pattern: pattern,
             })}
           />
           {errors.email && (
@@ -67,8 +69,9 @@ export const Login = ({ setIsLoggedIn }) => {
           </button>
         </form>
       </div>
-      <p className="mx-5 pt-7">
-        demo id & password:<br></br> mock@test.com, 123456
+      <p className="mx-5 text-right p-3 mt-7 border-yellow-400 border">
+        userId & password:<br></br>
+        <br></br>mock@test.com, 123456
       </p>
     </>
   );

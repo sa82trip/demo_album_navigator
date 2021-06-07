@@ -18715,10 +18715,10 @@ video {
 }
 
 .inset-96 {
-  top: 24rem;
-  right: 24rem;
-  bottom: 24rem;
-  left: 24rem;
+  top: 96%;
+  right: 96%;
+  bottom: 96%;
+  left: 96%;
 }
 
 .inset-auto {
@@ -19397,13 +19397,13 @@ video {
 }
 
 .inset-y-96 {
-  top: 24rem;
-  bottom: 24rem;
+  top: 96%;
+  bottom: 96%;
 }
 
 .inset-x-96 {
-  right: 24rem;
-  left: 24rem;
+  right: 96%;
+  left: 96%;
 }
 
 .inset-y-auto {
@@ -20421,19 +20421,19 @@ video {
 }
 
 .top-96 {
-  top: 24rem;
+  top: 96%;
 }
 
 .right-96 {
-  right: 24rem;
+  right: 96%;
 }
 
 .bottom-96 {
-  bottom: 24rem;
+  bottom: 96%;
 }
 
 .left-96 {
-  left: 24rem;
+  left: 96%;
 }
 
 .top-auto {
@@ -50050,10 +50050,10 @@ video {
   }
 
   .sm\:inset-96 {
-    top: 24rem;
-    right: 24rem;
-    bottom: 24rem;
-    left: 24rem;
+    top: 96%;
+    right: 96%;
+    bottom: 96%;
+    left: 96%;
   }
 
   .sm\:inset-auto {
@@ -50732,13 +50732,13 @@ video {
   }
 
   .sm\:inset-y-96 {
-    top: 24rem;
-    bottom: 24rem;
+    top: 96%;
+    bottom: 96%;
   }
 
   .sm\:inset-x-96 {
-    right: 24rem;
-    left: 24rem;
+    right: 96%;
+    left: 96%;
   }
 
   .sm\:inset-y-auto {
@@ -51756,19 +51756,19 @@ video {
   }
 
   .sm\:top-96 {
-    top: 24rem;
+    top: 96%;
   }
 
   .sm\:right-96 {
-    right: 24rem;
+    right: 96%;
   }
 
   .sm\:bottom-96 {
-    bottom: 24rem;
+    bottom: 96%;
   }
 
   .sm\:left-96 {
-    left: 24rem;
+    left: 96%;
   }
 
   .sm\:top-auto {
@@ -81207,10 +81207,10 @@ video {
   }
 
   .md\:inset-96 {
-    top: 24rem;
-    right: 24rem;
-    bottom: 24rem;
-    left: 24rem;
+    top: 96%;
+    right: 96%;
+    bottom: 96%;
+    left: 96%;
   }
 
   .md\:inset-auto {
@@ -81889,13 +81889,13 @@ video {
   }
 
   .md\:inset-y-96 {
-    top: 24rem;
-    bottom: 24rem;
+    top: 96%;
+    bottom: 96%;
   }
 
   .md\:inset-x-96 {
-    right: 24rem;
-    left: 24rem;
+    right: 96%;
+    left: 96%;
   }
 
   .md\:inset-y-auto {
@@ -82913,19 +82913,19 @@ video {
   }
 
   .md\:top-96 {
-    top: 24rem;
+    top: 96%;
   }
 
   .md\:right-96 {
-    right: 24rem;
+    right: 96%;
   }
 
   .md\:bottom-96 {
-    bottom: 24rem;
+    bottom: 96%;
   }
 
   .md\:left-96 {
-    left: 24rem;
+    left: 96%;
   }
 
   .md\:top-auto {
@@ -112364,10 +112364,10 @@ video {
   }
 
   .lg\:inset-96 {
-    top: 24rem;
-    right: 24rem;
-    bottom: 24rem;
-    left: 24rem;
+    top: 96%;
+    right: 96%;
+    bottom: 96%;
+    left: 96%;
   }
 
   .lg\:inset-auto {
@@ -113046,13 +113046,13 @@ video {
   }
 
   .lg\:inset-y-96 {
-    top: 24rem;
-    bottom: 24rem;
+    top: 96%;
+    bottom: 96%;
   }
 
   .lg\:inset-x-96 {
-    right: 24rem;
-    left: 24rem;
+    right: 96%;
+    left: 96%;
   }
 
   .lg\:inset-y-auto {
@@ -114070,19 +114070,19 @@ video {
   }
 
   .lg\:top-96 {
-    top: 24rem;
+    top: 96%;
   }
 
   .lg\:right-96 {
-    right: 24rem;
+    right: 96%;
   }
 
   .lg\:bottom-96 {
-    bottom: 24rem;
+    bottom: 96%;
   }
 
   .lg\:left-96 {
-    left: 24rem;
+    left: 96%;
   }
 
   .lg\:top-auto {
@@ -143521,10 +143521,10 @@ video {
   }
 
   .xl\:inset-96 {
-    top: 24rem;
-    right: 24rem;
-    bottom: 24rem;
-    left: 24rem;
+    top: 96%;
+    right: 96%;
+    bottom: 96%;
+    left: 96%;
   }
 
   .xl\:inset-auto {
@@ -144203,13 +144203,13 @@ video {
   }
 
   .xl\:inset-y-96 {
-    top: 24rem;
-    bottom: 24rem;
+    top: 96%;
+    bottom: 96%;
   }
 
   .xl\:inset-x-96 {
-    right: 24rem;
-    left: 24rem;
+    right: 96%;
+    left: 96%;
   }
 
   .xl\:inset-y-auto {
@@ -145227,19 +145227,19 @@ video {
   }
 
   .xl\:top-96 {
-    top: 24rem;
+    top: 96%;
   }
 
   .xl\:right-96 {
-    right: 24rem;
+    right: 96%;
   }
 
   .xl\:bottom-96 {
-    bottom: 24rem;
+    bottom: 96%;
   }
 
   .xl\:left-96 {
-    left: 24rem;
+    left: 96%;
   }
 
   .xl\:top-auto {
@@ -174678,10 +174678,10 @@ video {
   }
 
   .\32xl\:inset-96 {
-    top: 24rem;
-    right: 24rem;
-    bottom: 24rem;
-    left: 24rem;
+    top: 96%;
+    right: 96%;
+    bottom: 96%;
+    left: 96%;
   }
 
   .\32xl\:inset-auto {
@@ -175360,13 +175360,13 @@ video {
   }
 
   .\32xl\:inset-y-96 {
-    top: 24rem;
-    bottom: 24rem;
+    top: 96%;
+    bottom: 96%;
   }
 
   .\32xl\:inset-x-96 {
-    right: 24rem;
-    left: 24rem;
+    right: 96%;
+    left: 96%;
   }
 
   .\32xl\:inset-y-auto {
@@ -176384,19 +176384,19 @@ video {
   }
 
   .\32xl\:top-96 {
-    top: 24rem;
+    top: 96%;
   }
 
   .\32xl\:right-96 {
-    right: 24rem;
+    right: 96%;
   }
 
   .\32xl\:bottom-96 {
-    bottom: 24rem;
+    bottom: 96%;
   }
 
   .\32xl\:left-96 {
-    left: 24rem;
+    left: 96%;
   }
 
   .\32xl\:top-auto {

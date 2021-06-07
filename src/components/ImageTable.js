@@ -1,8 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 
-const ImageTable = ({ images }) => {
-  const history = useHistory();
+const ImageTable = ({ images, menuButtons, setEditTarget }) => {
   return (
     <div id="image_table" className="mx-3">
       {images &&
@@ -14,17 +12,25 @@ const ImageTable = ({ images }) => {
               </span>
             </div>
             <div key={one.id} className="ml-1 my-1 max-w-max">
-              <label
-                onClick={() => {
-                  history.push(`/edit/${one.id}`);
-                }}
-                className="text-lg font-semibold"
-              >
-                {one.title}
-              </label>
+              <div className="flex justify-between ">
+                <label className="text-lg font-semibold">{one.title}</label>
+                {one.userId === localStorage.getItem("userId") ? (
+                  <span
+                    onClick={() => {
+                      menuButtons.current.classList.remove("inset-full");
+                      menuButtons.current.classList.add("inset-y-96");
+                      setEditTarget(one);
+                    }}
+                    className="text-lg"
+                  >
+                    …
+                  </span>
+                ) : (
+                  <span></span>
+                )}
+              </div>
               <img className="w-auto rounded-lg" src={one.imageUrl} />
             </div>
-            <hr className="bg-white"></hr>
           </div>
         ))}
     </div>

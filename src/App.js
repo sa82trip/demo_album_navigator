@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import ImageTable from "./components/ImageTable";
 import ImageUploader from "./components/ImageUploader";
+import MenuContainer from "./components/MenuContainer";
 import { NavBar } from "./components/NavBar";
 import Pagination from "./components/Pagination";
 import PostingEditor from "./components/PostingEditor";
@@ -22,7 +23,11 @@ function App() {
   const [onePost, setOnePost] = useState({});
   const [previewURL, setPreviewURL] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [editTarget, setEditTarget] = useState(null);
+
   const history = useHistory();
+  const menuButtons = useRef();
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/albums").then((response) => {
@@ -53,7 +58,6 @@ function App() {
 
   const handleFileOnChange = (event) => {
     let editingTarget;
-
     event.preventDefault();
     let reader = new FileReader();
     const files = Array.from(event.target.files);
@@ -61,8 +65,8 @@ function App() {
     //여기서 분기 처리 해서 edit랑 post랑 구별
     const newImage = {
       id: `R-${new Date().valueOf()}`,
-      title: "user uploaded photo",
-      userId: 101,
+      title: `${localStorage.getItem("userId")} uploaded this photo`,
+      userId: localStorage.getItem("userId"),
       imageUrl: "",
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -95,10 +99,10 @@ function App() {
       setImages(newImages);
       setPreviewURL("");
     } else {
-      console.log("no image");
     }
   };
-  const editHandle = () => {
+
+  const editHandler = () => {
     let newList = images.filter((one) => !one.createdAt);
     let onlyWithDate = images.filter((one) => one.createdAt);
     //data를 처음에 date가 없는 걸 받았기 때문에, 새로 업로드 하는 포스팅이랑 따로 작업
@@ -106,12 +110,13 @@ function App() {
       if (onlyWithDate) {
         if (onlyWithDate.length == 1) {
           onlyWithDate[0] = onePost;
-          console.log(onlyWithDate);
           setImages([...onlyWithDate, ...newList]);
+          setPreviewURL("");
         } else if (onlyWithDate.length > 1) {
           onlyWithDate.filter((one) => one.id !== onePost.id).push(onePost);
           onlyWithDate.sort((a, b) => a.createdAt - b.createdAt);
           setImages([...onlyWithDate, ...newList]);
+          setPreviewURL("");
         }
       }
     } else {
@@ -120,6 +125,7 @@ function App() {
       setImages(onlyWithDate ? [...onlyWithDate, ...newList] : newList);
     }
   };
+
   const logoutHandler = () => {
     const isConfirmed = window.confirm("Do you really want to logout?");
     if (isConfirmed) {
@@ -129,18 +135,33 @@ function App() {
       setIsLoggedIn(false);
     }
   };
+
+  const deleteHandler = (target) => {
+    setImages(images.filter((one) => one.id !== target.id));
+  };
+
   if (localStorage.getItem("userId") !== "mock@test.com") {
-    return <Login setIsLoggedIn={setIsLoggedIn} />;
+    return (
+      <Login setIsLoggedIn={setIsLoggedIn} setLoggedInUser={setLoggedInUser} />
+    );
   }
+
   return (
     <Router>
       <>
         <NavBar logoutHandler={logoutHandler} />
         <Switch>
           <Route exact path="/">
+            <div className="hidden absolute z-50 top-0 left-0 w-full h-full"></div>
             <div className="flex items-center justify-center">
               <div className="">
-                <ImageTable images={currentImages()} />
+                <ImageTable
+                  deleteHandler={deleteHandler}
+                  images={currentImages()}
+                  menuButtons={menuButtons}
+                  setEditTarget={setEditTarget}
+                  editTarget={editTarget}
+                />
                 <div className="flex justify-center items-center mt-5">
                   <div></div>
                   <Pagination
@@ -154,6 +175,11 @@ function App() {
                 </div>
               </div>
             </div>
+            <MenuContainer
+              menuModal={menuButtons}
+              editTarget={editTarget}
+              deleteHandler={deleteHandler}
+            />
           </Route>
           <Route exact path="/upload">
             <ImageUploader
@@ -167,7 +193,7 @@ function App() {
               previewURL={previewURL}
               images={images}
               handleFileOnChange={handleFileOnChange}
-              editHandle={editHandle}
+              editHandle={editHandler}
             />
           </Route>
         </Switch>
@@ -175,5 +201,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;
