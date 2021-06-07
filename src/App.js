@@ -99,7 +99,7 @@ function App() {
       newImages.unshift(onePost);
       setImages(newImages);
       setPreviewURL("");
-    } else {
+      setOnePost(null);
     }
   };
 
@@ -107,6 +107,10 @@ function App() {
     let newList = images.filter((one) => !one.createdAt);
     let onlyWithDate = images.filter((one) => one.createdAt);
     //data를 처음에 date가 없는 걸 받았기 때문에, 새로 업로드 하는 포스팅이랑 따로 작업
+    if (!onePost) {
+      alert("You did not change the photo");
+      return;
+    }
     if (onePost.createdAt) {
       if (onlyWithDate) {
         if (onlyWithDate.length == 1) {
