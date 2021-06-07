@@ -22,7 +22,7 @@ const ImageUploader = ({ postingHandler, previewURL, handleFileOnChange }) => {
             postingHandler();
             history.push("/");
           }}
-          className="mx-3 p-2 bg-indigo-500 text-white font-semibold rounded-md"
+          className="confirmBtn"
         >
           confirm
         </button>

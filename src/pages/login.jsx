@@ -1,11 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-
-const mockUser = {
-  userId: "mock@test.com",
-  password: "123456",
-};
-const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+import { mockUser, pattern } from "../constants/constants";
 
 export const Login = ({ setIsLoggedIn, setLoggedInUser }) => {
   const loginHandler = ({ email, password }) => {
@@ -41,12 +36,10 @@ export const Login = ({ setIsLoggedIn, setLoggedInUser }) => {
               pattern: pattern,
             })}
           />
-          {errors.email && (
-            <h3 className="text-red-400 font-semibold">Email is required</h3>
-          )}
+          {errors.email && <h3 className="errorMsg">Email is required</h3>}
 
           {errors.email?.type === "pattern" && (
-            <h3 className="text-red-400 font-semibold">put valid email</h3>
+            <h3 className="errorMsg">put valid email</h3>
           )}
           <input
             placeholder="Password"
@@ -55,9 +48,7 @@ export const Login = ({ setIsLoggedIn, setLoggedInUser }) => {
             {...register("password", { required: true, minLength: 6 })}
           />
           {errors.password && (
-            <h3 className="text-red-400 font-semibold">
-              please check password
-            </h3>
+            <h3 className="errorMsg">please check password</h3>
           )}
           <button
             className={`bg-indigo-300 btn my-1 text-black mx-0 font-semibold text-xl p-2 ${

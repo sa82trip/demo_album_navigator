@@ -7,7 +7,7 @@ const Pagination = ({ imagesPerPage, totalImages, paginate, currentPage }) => {
   }
   return (
     <div className="pb-10 ml-5">
-      <div className="flex ">
+      <div className="flex">
         {currentPage !== 1 ? (
           <div className="text-2xl">
             <span className="mx-1" onClick={() => paginate(pageNumbers[0])}>

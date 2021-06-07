@@ -11,7 +11,8 @@ import MenuContainer from "./components/MenuContainer";
 import { NavBar } from "./components/NavBar";
 import Pagination from "./components/Pagination";
 import PostingEditor from "./components/PostingEditor";
-import { COLORS } from "./constant/colors";
+import { COLORS } from "./constants/colors";
+import { mockUser, POST, PROPERTIES, QUESTIONS } from "./constants/constants";
 import { Login } from "./pages/login";
 import "./styles/styles.css";
 
@@ -65,19 +66,19 @@ function App() {
     //여기서 분기 처리 해서 edit랑 post랑 구별
     const newImage = {
       id: `R-${new Date().valueOf()}`,
-      title: `${localStorage.getItem("userId")} uploaded this photo`,
-      userId: localStorage.getItem("userId"),
+      title: `${localStorage.getItem(PROPERTIES.USERID)} uploaded this photo`,
+      userId: localStorage.getItem(PROPERTIES.USERID),
       imageUrl: "",
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    if (event.target.name === "editing") {
+    if (event.target.name === POST.EDITING) {
       editingTarget = images.find((one) => one.id == event.target.id);
     }
     reader.onload = () => {
       setFile(file);
       setPreviewURL(reader.result);
-      if (event.target.name === "editing") {
+      if (event.target.name === POST.EDITING) {
         editingTarget.imageUrl = reader.result;
         editingTarget.updatedAt = new Date();
       } else {
@@ -85,7 +86,7 @@ function App() {
       }
     };
     reader.readAsDataURL(file);
-    if (event.target.name === "editing") {
+    if (event.target.name === POST.EDITING) {
       setOnePost(editingTarget);
     } else {
       setOnePost(newImage);
@@ -127,7 +128,7 @@ function App() {
   };
 
   const logoutHandler = () => {
-    const isConfirmed = window.confirm("Do you really want to logout?");
+    const isConfirmed = window.confirm(QUESTIONS.LOGOUT);
     if (isConfirmed) {
       localStorage.clear();
       history.push("/");
@@ -140,7 +141,7 @@ function App() {
     setImages(images.filter((one) => one.id !== target.id));
   };
 
-  if (localStorage.getItem("userId") !== "mock@test.com") {
+  if (localStorage.getItem(PROPERTIES.USERID) !== mockUser.userId) {
     return (
       <Login setIsLoggedIn={setIsLoggedIn} setLoggedInUser={setLoggedInUser} />
     );
@@ -152,8 +153,7 @@ function App() {
         <NavBar logoutHandler={logoutHandler} />
         <Switch>
           <Route exact path="/">
-            <div className="hidden absolute z-50 top-0 left-0 w-full h-full"></div>
-            <div className="flex items-center justify-center">
+            <div className="flexBox">
               <div className="">
                 <ImageTable
                   deleteHandler={deleteHandler}
@@ -162,7 +162,7 @@ function App() {
                   setEditTarget={setEditTarget}
                   editTarget={editTarget}
                 />
-                <div className="flex justify-center items-center mt-5">
+                <div className="flexBox mt-5">
                   <div></div>
                   <Pagination
                     currentPage={currentPage}

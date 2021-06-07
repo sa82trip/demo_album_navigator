@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { regex } from "../constants/constants";
 
 export const NavBar = ({ logoutHandler }) => {
   const location = useLocation();
-  let regex = new RegExp("^/$");
 
   return (
     <nav className="fixed top-0 left-0 right-0 p-1 bg-indigo-300 flex justify-between">
