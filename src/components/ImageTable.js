@@ -19,7 +19,7 @@ const ImageTable = ({ images, menuButtons, setEditTarget }) => {
                   <span
                     onClick={() => {
                       menuButtons.current.classList.remove("inset-full");
-                      menuButtons.current.classList.add("inset-y-96");
+                      menuButtons.current.classList.add("inset-y-93");
                       setEditTarget(one);
                     }}
                     className="text-lg"
