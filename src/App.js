@@ -17,6 +17,7 @@ import { Login } from "./pages/login";
 import "./styles/styles.css";
 
 function App() {
+  // this comment was written on vscode.dev
   const [images, setImages] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [imagesPerPage, setImagesPerPage] = useState(5);
